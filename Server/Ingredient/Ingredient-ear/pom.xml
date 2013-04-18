@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>Ingredient</artifactId>
+    <groupId>za.co.blacklemon</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <groupId>za.co.blacklemon</groupId>
+  <artifactId>Ingredient-ear</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>ear</packaging>
+
+  <name>Ingredient-ear</name>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>2.3.2</version>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-ear-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+            <version>6</version>
+            <defaultLibBundleDir>lib</defaultLibBundleDir>
+            <modules>
+						<!-- If you change the arificatId and groupId don't forget too update
+							this here as well. I would also suggest changing the contextRoot. -->
+						<webModule>
+							<groupId>za.co.blacklemon</groupId>
+							<artifactId>Ingredient-web</artifactId>
+							<bundleFileName>Ingredient-web.war</bundleFileName>
+							<contextRoot>/ingredient</contextRoot>
+						</webModule>
+					</modules>
+        </configuration>
+      </plugin>
+
+      <plugin>
+				<groupId>org.jboss.as.plugins</groupId>
+				<artifactId>jboss-as-maven-plugin</artifactId>
+				<configuration>
+					<skip>false</skip>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+    </plugins>
+  </build>
+    <dependencies>
+        <dependency>
+            <groupId>za.co.blacklemon</groupId>
+            <artifactId>Ingredient-web</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+</project>
+
+
+
+
+
+
+
+<build>
+		<finalName>Service-Instruction</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ear-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<!-- Tell Maven we are using Java EE 6 -->
+					<version>6</version>
+					<!-- Use Java EE ear libraries as needed. Java EE ear libraries are
+						in easy way to package any libraries needed in the ear, and automatically
+						have any modules (EJB-JARs and WARs) use them -->
+					<defaultLibBundleDir>lib</defaultLibBundleDir>
+					<modules>
+						<!-- If you change the arificatId and groupId don't forget too update
+							this here as well. I would also suggest changing the contextRoot. -->
+						<webModule>
+							<groupId>za.co.instruction</groupId>
+							<artifactId>Service-ws</artifactId>
+							<bundleFileName>InstructionService-ws.war</bundleFileName>
+							<contextRoot>/instruction.service</contextRoot>
+						</webModule>
+					</modules>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
