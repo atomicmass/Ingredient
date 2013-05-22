@@ -9,6 +9,7 @@
 #import "MasterViewController.h"
 
 #import "DetailViewController.h"
+#import "CustomCell.h"
 
 @interface MasterViewController () {
     NSMutableArray *_objects;
@@ -32,9 +33,9 @@
 	// Do any additional setup after loading the view, typically from a nib.
     self.detailViewController = (DetailViewController *)[[self.splitViewController.viewControllers lastObject] topViewController];
     _objects =[[NSMutableArray alloc] init];
-    [_objects addObject:@"Item 1"];
-    [_objects addObject:@"Item 2"];
-    [_objects addObject:@"Item 3"];
+    [_objects addObject:@"Ingredients"];
+    [_objects addObject:@"Recipes"];
+    [_objects addObject:@"Suppliers"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,12 +58,13 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    CustomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomTableCell"];
+    if(cell == nil) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
+        cell = [nib objectAtIndex:0];
+    }
     
-    UILabel *label;
-    
-    label = (UILabel *)[cell viewWithTag:1];
-    label.text = [NSString stringWithFormat:@"%@", [_objects objectAtIndex:indexPath.row]];
+    cell.labelMainText.text = [NSString stringWithFormat:@"%@", [_objects objectAtIndex:indexPath.row]];
     
     return cell;
 }
@@ -73,6 +75,7 @@
         NSDate *object = _objects[indexPath.row];
         self.detailViewController.detailItem = object;
     }
+    [self performSegueWithIdentifier:@"showDetail" sender:self];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender

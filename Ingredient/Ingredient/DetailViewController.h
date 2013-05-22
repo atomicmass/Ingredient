@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DetailViewController : UIViewController <UISplitViewControllerDelegate>
+@interface DetailViewController : UITableViewController
 
 @property (strong, nonatomic) id detailItem;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 
-@property (weak, nonatomic) IBOutlet UILabel *detailDescriptionLabel;
 @end

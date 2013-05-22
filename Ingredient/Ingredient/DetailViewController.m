@@ -7,9 +7,13 @@
 //
 
 #import "DetailViewController.h"
+#import "DataManager.h"
+#import "CustomCell.h"
 
-@interface DetailViewController ()
-@property (strong, nonatomic) UIPopoverController *masterPopoverController;
+@interface DetailViewController () {
+    NSArray *_objects;
+}
+
 - (void)configureView;
 @end
 
@@ -25,25 +29,53 @@
         // Update the view.
         [self configureView];
     }
-
-    if (self.masterPopoverController != nil) {
-        [self.masterPopoverController dismissPopoverAnimated:YES];
-    }        
 }
 
 - (void)configureView
 {
     // Update the user interface for the detail item.
 
-    if (self.detailItem) {
-        self.detailDescriptionLabel.text = [self.detailItem description];
+    if (!self.detailItem) {
+        NSLog(@"DetailViewController.configureView failed! No detail item.");
+        return;
     }
+    
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    NSString *title = [self.detailItem description];
+    self.title = title;
+    
+    [self.loadingIndicator startAnimating];
+    if([title isEqualToString:@"Ingredients"]) {
+        [DataManager getIngredientCategories:^(NSArray *array) {
+            _objects = [array copy];
+            
+            [self.loadingIndicator stopAnimating];
+            [self.tableView reloadData];
+        }];
+    }
+    else if([title isEqualToString:@"Recipes"]) {
+        [DataManager getRecipeCategories:^(NSArray *array) {
+            _objects = [array copy];
+            
+            [self.loadingIndicator stopAnimating];
+            [self.tableView reloadData];
+        }];
+    } else if([title isEqualToString:@"Suppliers"]) {
+        [DataManager getSuppliers:^(NSArray *array) {
+            _objects = [array copy];
+            
+            [self.loadingIndicator stopAnimating];
+            [self.tableView reloadData];
+        }];
+    }
+
+    
     [self configureView];
 }
 
@@ -53,20 +85,25 @@
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Split view
-
-- (void)splitViewController:(UISplitViewController *)splitController willHideViewController:(UIViewController *)viewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)popoverController
-{
-    barButtonItem.title = NSLocalizedString(@"Master", @"Master");
-    [self.navigationItem setLeftBarButtonItem:barButtonItem animated:YES];
-    self.masterPopoverController = popoverController;
+#pragma mark - Table View
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return _objects.count;
 }
 
-- (void)splitViewController:(UISplitViewController *)splitController willShowViewController:(UIViewController *)viewController invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
-{
-    // Called when the view is shown again in the split view, invalidating the button and popover controller.
-    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
-    self.masterPopoverController = nil;
+-(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
 }
 
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CustomCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CustomTableCell"];
+    if(cell == nil) {
+        NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"CustomCell" owner:self options:nil];
+        cell = [nib objectAtIndex:0];
+    }
+    
+    NSDictionary *d = [_objects objectAtIndex:indexPath.row];
+    cell.labelMainText.text = [NSString stringWithFormat:@"%@", [d objectForKey:@"name"]];
+    
+    return cell;
+}
 @end

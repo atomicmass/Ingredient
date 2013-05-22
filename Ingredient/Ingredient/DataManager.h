@@ -8,15 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void(^DictionaryHandler)(NSDictionary *dictionary);
+typedef void(^ArrayHandler)(NSArray *array);
+
 @interface DataManager : NSObject {
     
 }
 
-+ (NSArray *) getIngredientCategories;
-+ (NSArray *) getIngredientsByCategory:(int) categoryId;
-+ (NSArray *) getRecipeCategories;
-+ (NSArray *) getRecipesByCategory:(int) categoryId;
-+ (NSArray *) getSuppliers;
-+ (NSArray *) getIngredientsBySupplier:(int) supplierId;
++ (void) getIngredientCategories:(ArrayHandler) handler;
++ (void) getIngredientsByCategory:(int) categoryId withHandler:(ArrayHandler) handler;
++ (void) getRecipeCategories:(ArrayHandler) handler;
++ (void) getRecipesByCategory:(int) categoryId withHandler:(ArrayHandler) handler;
++ (void) getSuppliers:(ArrayHandler) handler;
++ (void) getIngredientsBySupplier:(int) supplierId withHandler:(ArrayHandler) handler;
 
 @end

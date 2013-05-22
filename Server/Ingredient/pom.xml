@@ -9,5 +9,6 @@
   <modules>
     <module>Ingredient-ear</module>
     <module>Ingredient-web</module>
+    <module>Ingredient-Model</module>
   </modules>
 </project>

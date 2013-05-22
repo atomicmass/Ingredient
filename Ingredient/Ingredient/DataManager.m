@@ -12,6 +12,7 @@
 #import "Recipe.h"
 #import "RecipeCategory.h"
 #import "Supplier.h"
+#import "WebRequest.h"
 
 @implementation DataManager
 
@@ -31,44 +32,49 @@ static NSArray *suppliers;
     recipes = [[NSArray alloc] init];
 }
 
-+ (void) loadSuppliers {
-    //todo: load properly
-    suppliers = [[NSArray alloc] init];
++ (void) loadSuppliers:(ArrayHandler) handler {
+    [WebRequest requestArray:@"suppliers"
+                onCompletion:^(NSArray *array) {
+                    suppliers = array;
+                    if(handler) {
+                        handler(array);
+                    }
+                }];
 }
 
-+ (void) loadRecipeCategories {
-    //todo: load
-    recipeCategories = [[NSArray alloc] init];
++ (void) loadRecipeCategories:(ArrayHandler) handler {
+    [WebRequest requestArray:@"recipeCategories"
+                onCompletion:^(NSArray *array) {
+                    recipeCategories = array;
+                    if(handler) {
+                        handler(array);
+                    }
+                }];
+
 }
 
-+ (void) loadIngredientCategories {
-    //todo: load
-    //ingredientCategories = [[NSArray alloc] init];
-    
-    IngredientCategory *c1 = [[IngredientCategory alloc] init];
-    c1.entityId = 1;
-    c1.name = @"Vegetables";
-    
-    IngredientCategory *c2 = [[IngredientCategory alloc] init];
-    c2.entityId = 2;
-    c2.name = @"Meat";
-    
-    IngredientCategory *c3 = [[IngredientCategory alloc] init];
-    c3.entityId = 3;
-    c3.name = @"Poultry";
-    
-    ingredientCategories = [[NSArray alloc] initWithObjects:c1, c2, c3, nil];
++ (void) loadIngredientCategories:(ArrayHandler) handler {
+    [WebRequest requestArray:@"ingredientCategories"
+              onCompletion:^(NSArray *array) {
+                  ingredientCategories = array;
+                  if(handler) {
+                      handler(array);
+                  }
+              }];
 }
 
-+ (NSArray *) getIngredientCategories {
-    if(ingredientCategories == nil) {
-        [self loadIngredientCategories];
++ (void) getIngredientCategories:(ArrayHandler) handler {
+    if(!ingredientCategories) {
+        [self loadIngredientCategories:handler];
     }
-    
-    return ingredientCategories;
+    else {
+        if(handler) {
+            handler(ingredientCategories);
+        }
+    }
 }
 
-+ (NSArray *) getIngredientsByCategory:(int) categoryId {
++ (void) getIngredientsByCategory:(int) categoryId withHandler:(ArrayHandler)handler {
     if(ingredients == nil) {
         [self loadIngredients];
     }
@@ -82,19 +88,20 @@ static NSArray *suppliers;
             }
         }
     }
-    
-    return [a copy];
 }
 
-+ (NSArray *) getRecipeCategories {
-    if(recipeCategories == nil) {
-        [self loadRecipeCategories];
++ (void) getRecipeCategories:(ArrayHandler) handler {
+    if(!recipeCategories) {
+        [self loadRecipeCategories:handler];
     }
-    
-    return recipeCategories;
+    else {
+        if(handler) {
+            handler(recipeCategories);
+        }
+    }
 }
 
-+ (NSArray *) getRecipesByCategory:(int) categoryId {
++ (void) getRecipesByCategory:(int) categoryId withHandler:(ArrayHandler) handler {
     if(recipes == nil) {
         [self loadRecipes];
     }
@@ -108,19 +115,20 @@ static NSArray *suppliers;
             }
         }
     }
-    
-    return [a copy];
 }
 
-+ (NSArray *) getSuppliers {
++ (void) getSuppliers:(ArrayHandler) handler {
     if(suppliers == nil) {
-        [self loadSuppliers];
+        [self loadSuppliers:handler];
     }
-    
-    return suppliers;
+    else {
+        if(handler) {
+            handler(suppliers);
+        }
+    }
 }
 
-+ (NSArray *) getIngredientsBySupplier:(int) supplierId {
++ (void) getIngredientsBySupplier:(int) supplierId withHandler:(ArrayHandler)handler {
     if(ingredients == nil) {
         [self loadIngredients];
     }
@@ -134,8 +142,6 @@ static NSArray *suppliers;
             }
         }
     }
-    
-    return [a copy];
 }
 
 @end

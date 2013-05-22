@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14174717172114CF00D17059 /* WebRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 14174716172114CF00D17059 /* WebRequest.m */; };
+		14174719172137E700D17059 /* CustomCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14174718172137E700D17059 /* CustomCell.xib */; };
+		1417471C1721555600D17059 /* NSString+WebService.m in Sources */ = {isa = PBXBuildFile; fileRef = 1417471B1721555600D17059 /* NSString+WebService.m */; };
 		143243C1171EBAF600664482 /* CustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 143243C0171EBAF600664482 /* CustomCell.m */; };
 		14397DAF171D488F0044C496 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14397DAE171D488F0044C496 /* UIKit.framework */; };
 		14397DB1171D488F0044C496 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14397DB0171D488F0044C496 /* Foundation.framework */; };
@@ -36,6 +39,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		14174715172114CF00D17059 /* WebRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebRequest.h; sourceTree = "<group>"; };
+		14174716172114CF00D17059 /* WebRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebRequest.m; sourceTree = "<group>"; };
+		14174718172137E700D17059 /* CustomCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomCell.xib; sourceTree = "<group>"; };
+		1417471A1721555600D17059 /* NSString+WebService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+WebService.h"; sourceTree = "<group>"; };
+		1417471B1721555600D17059 /* NSString+WebService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+WebService.m"; sourceTree = "<group>"; };
 		143243BF171EBAF600664482 /* CustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCell.h; sourceTree = "<group>"; };
 		143243C0171EBAF600664482 /* CustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCell.m; sourceTree = "<group>"; };
 		14397DAB171D488F0044C496 /* Ingredient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ingredient.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -93,11 +101,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		14174714172114AC00D17059 /* WebServices */ = {
+			isa = PBXGroup;
+			children = (
+				14174715172114CF00D17059 /* WebRequest.h */,
+				14174716172114CF00D17059 /* WebRequest.m */,
+				1417471A1721555600D17059 /* NSString+WebService.h */,
+				1417471B1721555600D17059 /* NSString+WebService.m */,
+			);
+			name = WebServices;
+			sourceTree = "<group>";
+		};
 		143243C2171EBDF800664482 /* CustomUI */ = {
 			isa = PBXGroup;
 			children = (
 				143243BF171EBAF600664482 /* CustomCell.h */,
 				143243C0171EBAF600664482 /* CustomCell.m */,
+				14174718172137E700D17059 /* CustomCell.xib */,
 			);
 			name = CustomUI;
 			sourceTree = "<group>";
@@ -132,6 +152,7 @@
 		14397DB4171D488F0044C496 /* Ingredient */ = {
 			isa = PBXGroup;
 			children = (
+				14174714172114AC00D17059 /* WebServices */,
 				143243C2171EBDF800664482 /* CustomUI */,
 				14397DE7171D6AF30044C496 /* Managers */,
 				14397DD7171D49180044C496 /* Model */,
@@ -257,6 +278,7 @@
 				14BDB215171E8FD500D93ED9 /* cellBackground@2x.png in Resources */,
 				14BDB218171E904F00D93ED9 /* cellBackgroundHighlight.png in Resources */,
 				14BDB219171E904F00D93ED9 /* cellBackgroundHighlight@2x.png in Resources */,
+				14174719172137E700D17059 /* CustomCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,6 +302,8 @@
 				14397DED171D6DAC0044C496 /* BaseEntity.m in Sources */,
 				14BDB211171E7A7800D93ED9 /* RecipeCategory.m in Sources */,
 				143243C1171EBAF600664482 /* CustomCell.m in Sources */,
+				14174717172114CF00D17059 /* WebRequest.m in Sources */,
+				1417471C1721555600D17059 /* NSString+WebService.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,4 +10,6 @@
 
 @interface CustomCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UILabel *labelMainText;
+
 @end
